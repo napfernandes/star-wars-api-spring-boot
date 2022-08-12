@@ -1,0 +1,16 @@
+version: "3.2"
+services:
+  starwarsapi-redis: &redis
+    image: bitnami/redis:6.2.1
+    container_name: starwarsapi-redis
+    environment:
+      - REDIS_PASSWORD=password
+    ports:
+      - "6380:6379"
+    expose:
+      - "6380"
+    networks:
+      - redis_net
+    
+networks:
+  redis_net:
