@@ -1,11 +1,11 @@
-package com.napfernandes.starwarsapi.service;
+package com.napfernandes.starwarsapi.client;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
-public abstract class StarWarsService {
+public abstract class StarWarsClient {
     protected WebClient starWarsApiClient;
 
-    public StarWarsService(WebClient starWarsApiClient) {
+    public StarWarsClient(WebClient starWarsApiClient) {
         this.starWarsApiClient = starWarsApiClient;
     }
 }

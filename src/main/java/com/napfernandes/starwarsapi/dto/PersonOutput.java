@@ -12,8 +12,14 @@ import lombok.NoArgsConstructor;
 public class PersonOutput {
     private String name;
     private String birthYear;
+    private String eyeColor;
     private String gender;
+    private String hairColor;
+    private String height;
+    private String mass;
+    private String skinColor;
     private String homeworld;
     private String url;
     private LocalDateTime created;
+    private LocalDateTime edited;
 }

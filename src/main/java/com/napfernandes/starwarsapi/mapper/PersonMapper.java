@@ -12,5 +12,8 @@ public interface PersonMapper {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     @Mapping(target = "birthYear", source = "person.birth_year")
+    @Mapping(target = "eyeColor", source = "person.eye_color")
+    @Mapping(target = "hairColor", source = "person.hair_color")
+    @Mapping(target = "skinColor", source = "person.skin_color")
     PersonOutput personToPersonOutput(Person person);
 }
