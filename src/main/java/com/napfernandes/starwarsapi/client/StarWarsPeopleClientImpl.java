@@ -17,6 +17,7 @@ public class StarWarsPeopleClientImpl extends StarWarsClient implements StarWars
     public Person getPersonById(int personId) {
         return super.starWarsApiClient.get()
                 .uri("/people/%s/".formatted(personId))
+                .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(Person.class)
