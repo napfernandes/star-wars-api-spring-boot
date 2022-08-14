@@ -1,5 +1,8 @@
 package com.napfernandes.starwarsapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.napfernandes.starwarsapi.client.StarWarsPeopleClient;
@@ -36,5 +39,20 @@ public class StarWarsPeopleServiceImpl implements StarWarsPeopleService {
         }
 
         return this.personMapper.personToPersonOutput(person);
+    }
+
+    @Override
+    public List<PersonOutput> getPeople() {
+        String cacheKey = "getPeople";
+
+        List<Person> people = this.cacheService.getItemAsList(cacheKey, Person.class);
+
+        if (people == null) {
+            this.cacheService.setItem(cacheKey, this.starWarsPeopleClient.getPeople());
+        }
+
+        return people.stream()
+                .map(person -> personMapper.personToPersonOutput(person))
+                .collect(Collectors.toList());
     }
 }
