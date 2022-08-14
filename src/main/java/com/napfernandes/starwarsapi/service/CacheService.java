@@ -1,7 +1,11 @@
 package com.napfernandes.starwarsapi.service;
 
-public interface CacheService<T> {
-    void setItem(String cacheKey, T item);
+import java.util.List;
 
-    T getItem(String cacheKey);
+public interface CacheService {
+    void setItem(String cacheKey, Object item);
+
+    <T> T getItem(String cacheKey);
+
+    <T> List<T> getItemAsList(String cacheKey, Class<T> clazz);
 }
