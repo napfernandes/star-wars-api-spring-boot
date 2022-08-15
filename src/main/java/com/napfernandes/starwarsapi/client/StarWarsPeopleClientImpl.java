@@ -2,13 +2,14 @@ package com.napfernandes.starwarsapi.client;
 
 import java.util.List;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.napfernandes.starwarsapi.entity.Person;
-import com.napfernandes.starwarsapi.entity.PeopleResult;
+import com.napfernandes.starwarsapi.entity.SearchResult;
 
 @Service
 public class StarWarsPeopleClientImpl extends StarWarsClient implements StarWarsPeopleClient {
@@ -29,14 +30,15 @@ public class StarWarsPeopleClientImpl extends StarWarsClient implements StarWars
 
     @Override
     public List<Person> getPeople() {
-        PeopleResult peopleResult = super.starWarsApiClient.get()
+        SearchResult<Person> searchResult = super.starWarsApiClient.get()
                 .uri("/people/")
                 .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
-                .bodyToMono(PeopleResult.class)
+                .bodyToMono(new ParameterizedTypeReference<SearchResult<Person>>() {
+                })
                 .block();
 
-        return peopleResult.getResults();
+        return searchResult.getResults();
     }
 }
