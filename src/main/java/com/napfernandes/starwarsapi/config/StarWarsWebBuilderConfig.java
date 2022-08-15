@@ -13,6 +13,6 @@ public class StarWarsWebBuilderConfig {
 
     @Bean
     public WebClient starWarsApiClient() {
-        return WebClient.create(starWarsApiUrl);
+        return WebClient.builder().baseUrl(starWarsApiUrl).build();
     }
 }

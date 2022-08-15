@@ -1,6 +1,5 @@
 package com.napfernandes.starwarsapi.service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -8,7 +7,6 @@ import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.reflect.TypeToken;
 import com.napfernandes.starwarsapi.gson.GsonConverter;
 
 @Service
@@ -23,24 +21,32 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void setItem(String cacheKey, Object item) {
+        if (item == null)
+            return;
+
         RBucket<String> bucket = redissonClient.getBucket(cacheKey);
 
         bucket.set(gsonConverter.toJson(item), 10, TimeUnit.MINUTES);
     }
 
     @Override
-    public <T> T getItem(String cacheKey) {
+    public <T> T getItem(String cacheKey, Class<T> clazz) {
         RBucket<String> bucket = redissonClient.getBucket(cacheKey);
+        String bucketValue = bucket.get();
 
-        Type itemType = new TypeToken<T>() {
-        }.getType();
+        if (bucketValue == null)
+            return null;
 
-        return gsonConverter.fromJson(bucket.get(), itemType);
+        return gsonConverter.fromJson(bucket.get(), clazz);
     }
 
     @Override
     public <T> List<T> getItemAsList(String cacheKey, Class<T> clazz) {
         RBucket<String> bucket = redissonClient.getBucket(cacheKey);
+        String bucketValue = bucket.get();
+
+        if (bucketValue == null)
+            return null;
 
         return gsonConverter.fromJsonList(bucket.get(), clazz);
     }
