@@ -11,7 +11,6 @@ import com.napfernandes.starwarsapi.service.StarWarsPeopleService;
 
 @RestController
 public class PeopleController {
-
     private StarWarsPeopleService starWarsPeopleService;
 
     public PeopleController(StarWarsPeopleService starWarsPeopleService) {

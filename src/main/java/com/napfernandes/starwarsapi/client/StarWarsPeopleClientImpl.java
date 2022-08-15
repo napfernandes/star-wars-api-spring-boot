@@ -37,7 +37,6 @@ public class StarWarsPeopleClientImpl extends StarWarsClient implements StarWars
                 .bodyToMono(PeopleResult.class)
                 .block();
 
-        System.out.println("Total: " + peopleResult.getCount());
         return peopleResult.getResults();
     }
 }

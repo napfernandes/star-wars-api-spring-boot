@@ -31,7 +31,7 @@ public class StarWarsPeopleServiceImpl implements StarWarsPeopleService {
     public PersonOutput getPersonById(int personId) {
         String cacheKey = String.format("getPersonById#%s", personId);
 
-        Person person = this.cacheService.getItem(cacheKey);
+        Person person = this.cacheService.getItem(cacheKey, Person.class);
 
         if (person == null) {
             person = this.starWarsPeopleClient.getPersonById(personId);
@@ -48,7 +48,8 @@ public class StarWarsPeopleServiceImpl implements StarWarsPeopleService {
         List<Person> people = this.cacheService.getItemAsList(cacheKey, Person.class);
 
         if (people == null) {
-            this.cacheService.setItem(cacheKey, this.starWarsPeopleClient.getPeople());
+            people = this.starWarsPeopleClient.getPeople();
+            this.cacheService.setItem(cacheKey, people);
         }
 
         return people.stream()

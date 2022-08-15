@@ -1,5 +1,6 @@
 package com.napfernandes.starwarsapi.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonOutput {
+public class PersonOutput implements Serializable {
     private String name;
     private String birthYear;
     private String eyeColor;
