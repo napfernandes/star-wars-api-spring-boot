@@ -1,16 +1,30 @@
 version: "3.2"
 services:
+  starwarsapi-server: &server
+    container_name: starwarsapi-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8090:8090
+    environment:
+      - REDIS_ADDRESS=redis://starwarsapi-redis:6379
+    networks:
+      - starwarsapi-network
+    depends_on:
+      - starwarsapi-redis
+
   starwarsapi-redis: &redis
     image: bitnami/redis:6.2.1
     container_name: starwarsapi-redis
     environment:
       - REDIS_PASSWORD=password
     ports:
-      - "6380:6379"
-    expose:
-      - "6380"
+      - "6379:6379"
     networks:
-      - redis_net
+      - starwarsapi-network
     
 networks:
-  redis_net:
+  starwarsapi-network:
+    driver: bridge
+
